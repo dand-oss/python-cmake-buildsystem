@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8.6)
 
 project(Python C ASM)
 
-set(PYTHON_VERSION "3.8.6" CACHE STRING "The version of Python to build.")
+set(PYTHON_VERSION "3.8.10" CACHE STRING "The version of Python to build.")
 
 ###############
 # ASI default settings
@@ -259,6 +259,10 @@ set(_download_3.8.3_md5 "a7c10a2ac9d62de75a0ca5204e2e7d07")
 set(_download_3.8.4_md5 "387e63fe42c40a29e3408ce231315516")
 set(_download_3.8.5_md5 "e2f52bcf531c8cc94732c0b6ff933ff0")
 set(_download_3.8.6_md5 "ea132d6f449766623eee886966c7d41f")
+set(_download_3.8.7_md5 "e1f40f4fc9ccc781fcbf8d4e86c46660")
+set(_download_3.8.8_md5 "d3af3b87e134c01c7f054205703adda2")
+set(_download_3.8.9_md5 "41a5eaa15818cee7ea59e578564a2629")
+set(_download_3.8.10_md5 "83d71c304acab6c678e86e239b42fa7e")
 
 set(_extracted_dir "Python-${PY_VERSION}")
 
