@@ -1,0 +1,117 @@
+# See https://pre-commit.com for more information
+default_language_version:
+  # default exe name
+  python: python
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.4.0
+    hooks:
+      - id: trailing-whitespace
+        types: [python]
+      - id: end-of-file-fixer
+        types: [python]
+      - id: check-case-conflict
+      - id: check-yaml
+      - id: check-xml
+      - id: check-json
+      - id: check-executables-have-shebangs
+      - id: mixed-line-ending
+  - repo: https://github.com/asottile/reorder_python_imports
+    rev: v2.4.0
+    hooks:
+      - id: reorder-python-imports
+  - repo: https://github.com/psf/black
+    rev: 20.8b1
+    hooks:
+      - id: black
+        name: black
+        language: python
+        types: [python]
+        args:
+          - "--line-length=80"
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v2.7.2
+    hooks:
+      - id: pyupgrade
+        args: [--py3-plus]
+  - repo: https://gitlab.com/pycqa/flake8
+    rev: 3.9.1
+    hooks:
+      - id: flake8
+        language: system
+        types: [python]
+        args:
+          - "--ignore=E203, E231, E501, W503, SC100, SC200"
+  - repo: https://github.com/pre-commit/mirrors-pylint
+    rev: v2.7.4
+    hooks:
+      - id: pylint
+        language: system
+        types: [python]
+        args:
+          - --rcfile=/i/src/winglue/pylintrc
+          - --max-nested-blocks
+          - "10"
+          - --max-branches
+          - "16"
+          - --max-statements
+          - "100"
+          - --min-similarity-lines
+          - "30"
+          - --disable=missing-function-docstring  # C0116
+          - --disable=line-too-long  # C0301
+          - --disable=bad-continuation  # C0330
+          - --disable=wrong-import-order  # C0411
+          - --disable=wrong-import-position  # C0413
+          - --disable=import-outside-toplevel  # C0415
+          - --disable=import-error  # E0401
+          - --disable=E0501
+          - --disable=no-name-in-module  # E0611
+          - --disable=no-member  # E1101
+          - --disable=too-many-function-args  # E1121
+          - --disable=c-extension-no-member  # I1101
+          - --disable=too-many-intance-attributes  # R0902
+          - --disable=too-many-locals  # R0914
+          - --disable=protected-access  # W0212
+          - --disable=fixme  # W0511
+          - --disable=global-statement  # W0603
+          - --disable=global-at-module-level  # W0604
+          - --disable=broad-except  # W0703
+          - --disable=logging-format-interpolation  # W1202
+          - --disable=logging-fstring-interpolation  # W1203
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v0.812
+    hooks:
+      - id: mypy
+        language: python
+        args:
+          - --no-strict-optional
+          - --ignore-missing-imports
+          - --scripts-are-modules
+          - --follow-imports=skip
+          - --disallow-untyped-defs
+          - --show-error-codes
+          - --warn-unused-ignores
+          - --python-version=3.7
+        additional_dependencies:
+          - tokenize-rt
+          - sqlalchemy-stubs
+          - dataclassy
+        types: [python]
+  - repo: https://github.com/pycqa/pydocstyle
+    rev: 6.0.0
+    hooks:
+      - id: pydocstyle
+        language: system
+        types: [python]
+        args:
+          - --ignore=D212,D203
+  - repo: local
+    # https://github.com/pre-commit/pre-commit/issues/875 - debug python version
+    hooks:
+      - id: tests
+        name: run pytests
+        entry: python -m pytest -v  --hypothesis-show-statistics
+        language: system
+        types: [python]
+        files: ^python/glsuplib/tests
